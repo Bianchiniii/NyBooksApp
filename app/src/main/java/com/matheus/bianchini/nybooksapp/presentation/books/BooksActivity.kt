@@ -31,6 +31,8 @@ class BooksActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.getBooks()
     }
 
     override fun onDestroy() {
