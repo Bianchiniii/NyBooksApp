@@ -8,19 +8,33 @@
     tools:context=".presentation.details.BooksDetailsFragment">
 
     <TextView
+        android:id="@+id/textView"
+        style="@style/myTextViewLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/details_text_title" />
+
+    <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/black"
         tools:text="Title" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/myTextViewLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:text="@string/details_text_description" />
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingTop="4dp"
-        android:textColor="@color/black"
         tools:text="Description" />
 </LinearLayout>
