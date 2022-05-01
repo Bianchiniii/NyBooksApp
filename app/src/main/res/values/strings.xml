@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">NY Books App</string>
 
-    <!-- FRAGMENT BOOK DETAILS    -->
+    <!-- FRAGMENT BOOK DETAILS  -->
     <string name="details_text_title">Title</string>
     <string name="details_text_description">Description</string>
+
+    <!-- API ERRORS  -->
+    <string name="error_unauthorized">Unauthorized</string>
+    <string name="error_generic">Untreated error</string>
+    <string name="error_catastrophic">Catastrophic error</string>
 </resources>

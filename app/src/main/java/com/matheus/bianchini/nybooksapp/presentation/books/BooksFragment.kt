@@ -32,8 +32,20 @@ class BooksFragment : Fragment() {
         viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
 
         setUpRvBooksBehaviour()
+        setUpViewFlipperBehaviour()
 
         viewModel.getBooks()
+    }
+
+    private fun setUpViewFlipperBehaviour() {
+        viewModel.viewFlipperLiveData.observe(viewLifecycleOwner) {
+            it?.let { viewFlipper ->
+                binding.vfMain.displayedChild = viewFlipper.first
+                viewFlipper.second?.let { errorMessageId ->
+                    binding.tvErrorMessage.text = getString(errorMessageId)
+                }
+            }
+        }
     }
 
     private fun setUpRvBooksBehaviour() {
