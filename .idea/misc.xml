@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/drawable/dividor.xml" value="0.1745" />
+        <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.3355" />
         <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/layout/activity_books.xml" value="0.358695652173913" />
         <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/layout/activity_main.xml" value="0.3484375" />
-        <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/layout/item_book.xml" value="0.25" />
+        <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/layout/books_fragment.xml" value="0.3625" />
+        <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/layout/fragment_books_details.xml" value="0.3625" />
+        <entry key="..\:/Projetos/NYBooksApp/app/src/main/res/layout/item_book.xml" value="0.22" />
       </map>
     </option>
   </component>

@@ -50,7 +50,8 @@ fun BooksBodyResponse.toDomain(): List<Book> {
         with(result.bookDetails.first()) {
             val book = Book(
                 title = this.title,
-                author = this.author
+                author = this.author,
+                description = this.description
             )
             books.add(book)
         }

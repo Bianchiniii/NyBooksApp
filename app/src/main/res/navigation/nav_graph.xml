@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/booksFragment">
+
+    <fragment
+        android:id="@+id/booksFragment"
+        android:name="com.matheus.bianchini.nybooksapp.presentation.books.BooksFragment"
+        android:label="Books"
+        tools:layout="@layout/books_fragment">
+        <action
+            android:id="@+id/action_booksFragment_to_booksDetailsFragment"
+            app:destination="@id/booksDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/booksDetailsFragment"
+        android:name="com.matheus.bianchini.nybooksapp.presentation.details.BooksDetailsFragment"
+        android:label="fragment_books_details"
+        tools:layout="@layout/fragment_books_details">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+    </fragment>
+</navigation>
