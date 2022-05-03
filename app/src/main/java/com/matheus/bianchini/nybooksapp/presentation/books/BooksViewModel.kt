@@ -3,16 +3,14 @@ package com.matheus.bianchini.nybooksapp.presentation.books
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.matheus.bianchini.nybooksapp.R
-import com.matheus.bianchini.nybooksapp.data.ApiServices
+import com.matheus.bianchini.nybooksapp.data.BooksResult
 import com.matheus.bianchini.nybooksapp.data.model.Book
-import com.matheus.bianchini.nybooksapp.data.response.BooksBodyResponse
-import com.matheus.bianchini.nybooksapp.data.response.toDomain
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.matheus.bianchini.nybooksapp.data.repository.BooksApiDataSource
+import com.matheus.bianchini.nybooksapp.data.repository.BooksRepository
 
-class BooksViewModel : ViewModel() {
+class BooksViewModel(private val booksRepository: BooksRepository) : ViewModel() {
 
     private val _booksLiveData: MutableLiveData<List<Book>> = MutableLiveData()
     val booksLiveData: LiveData<List<Book>> get() = _booksLiveData
@@ -21,24 +19,32 @@ class BooksViewModel : ViewModel() {
     val viewFlipperLiveData: LiveData<Pair<Int, Int?>> get() = _viewFlipperLiveData
 
     fun getBooks() {
-        ApiServices.service.listRepos().enqueue(object : Callback<BooksBodyResponse> {
-            override fun onResponse(
-                call: Call<BooksBodyResponse>,
-                response: Response<BooksBodyResponse>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let { booksBodyResponse ->
-                        _booksLiveData.postValue(booksBodyResponse.toDomain())
-                        _viewFlipperLiveData.postValue(Pair(VIEW_FLIPPER_BOOKS, null))
-                    }
-                } else if (response.code() == 401) {
-                    _viewFlipperLiveData.postValue(
-                        Pair(
-                            VIEW_FLIPPER_ERROR,
-                            R.string.error_unauthorized
+        booksRepository.getBooks { result ->
+            when (result) {
+                is BooksResult.Success -> {
+                    _booksLiveData.postValue(result.books)
+                    _viewFlipperLiveData.postValue(Pair(VIEW_FLIPPER_BOOKS, null))
+                }
+
+                is BooksResult.ApiError -> {
+                    if (result.statusCode == 401) {
+                        _viewFlipperLiveData.postValue(
+                            Pair(
+                                VIEW_FLIPPER_ERROR,
+                                R.string.error_unauthorized
+                            )
                         )
-                    )
-                } else {
+                    } else {
+                        _viewFlipperLiveData.postValue(
+                            Pair(
+                                VIEW_FLIPPER_ERROR,
+                                R.string.error_generic
+                            )
+                        )
+                    }
+                }
+
+                is BooksResult.ServerError -> {
                     _viewFlipperLiveData.postValue(
                         Pair(
                             VIEW_FLIPPER_ERROR,
@@ -47,16 +53,16 @@ class BooksViewModel : ViewModel() {
                     )
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<BooksBodyResponse>, t: Throwable) {
-                _viewFlipperLiveData.postValue(
-                    Pair(
-                        VIEW_FLIPPER_ERROR,
-                        R.string.error_catastrophic
-                    )
-                )
+    class BooksFactory(private val dataSource: BooksApiDataSource) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(BooksViewModel::class.java)) {
+                return BooksViewModel(dataSource) as T
             }
-        })
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 
     companion object {

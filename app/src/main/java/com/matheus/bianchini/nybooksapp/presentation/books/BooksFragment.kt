@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.matheus.bianchini.nybooksapp.R
+import com.matheus.bianchini.nybooksapp.data.repository.BooksApiDataSource
 import com.matheus.bianchini.nybooksapp.databinding.BooksFragmentBinding
 
 class BooksFragment : Fragment() {
@@ -29,8 +31,8 @@ class BooksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
-
+        viewModel =
+            BooksViewModel.BooksFactory(BooksApiDataSource()).create(BooksViewModel::class.java)
         setUpRvBooksBehaviour()
         setUpViewFlipperBehaviour()
 
